@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace TheTurtleChallange
@@ -9,33 +10,51 @@ namespace TheTurtleChallange
         private GameSettings _gameSettings;
         private List<string> _moves;
 
+        public Logic() : this(new GameSettings(), new List<string>()) { }
+
         public Logic(GameSettings gameSettings, List<string> moves)
         {
             this._gameSettings = gameSettings;
-            this._moves = moves;
-            PreinitChecks();
-        }
-
-        private void PreinitChecks()
-        {
-            if (_gameSettings == null)
-                throw new ArgumentNullException(nameof(_gameSettings));
-            if (_moves == null)
-                throw new ArgumentNullException(nameof(_moves));
-
-            _gameSettings.IsValid();            
+            this._moves = moves;            
         }
         
         public void Play()
-        {
+        {            
+            Position myTurtlePosition = _gameSettings.InitPosition;
+
             foreach(string move in _moves)
             {
                 //Get next position
-                //Check what happen 
+                myTurtlePosition = GetNextPosition(myTurtlePosition, move);
+                //Check what happen
+                if (IsOutBound(myTurtlePosition))
+                    throw new IndexOutOfRangeException("Your turtle is out of bounds");
+                if (MineHit(myTurtlePosition))
+                    throw new FieldAccessException("Your turtle hit a mine");
+                if (Exit(myTurtlePosition))
+                    throw new UnauthorizedAccessException("your turtle is out");
             }
+
+            //Is still in danger....
         }
 
-        private Position GetNextPosition(Position lastPosition, string move)
+        public bool IsOutBound(Position position)
+        {
+            return position.Tile.X < 0 || position.Tile.Y < 0
+                || position.Tile.X > _gameSettings.GridSize.X - 1 || position.Tile.Y > _gameSettings.GridSize.Y - 1;
+        }
+
+        public bool MineHit(Position position)
+        {
+            return _gameSettings.MinesPosition.FirstOrDefault(mine => mine.Equals(position.Tile)) != null;
+        }
+
+        public bool Exit(Position position)
+        {
+            return position.Tile.Equals(_gameSettings.ExitPosition);
+        }
+
+        public Position GetNextPosition(Position lastPosition, string move)
         {
             Position nextPosition = new Position() { Tile = lastPosition.Tile, Direction = lastPosition.Direction };
 
@@ -56,13 +75,13 @@ namespace TheTurtleChallange
             return nextPosition;
         }
 
-        private Direction GetNextDirection(Direction lastDirection)
+        public Direction GetNextDirection(Direction lastDirection)
         {
             //Using bitwise operation https://en.wikipedia.org/wiki/Bitwise_operations_in_C
             return ~lastDirection;
         }
 
-        private Tile GetNextTile(Tile lastTile, Direction lastDirection)
+        public Tile GetNextTile(Tile lastTile, Direction lastDirection)
         {
             Tile nextTile = new Tile() { X = lastTile.X, Y = lastTile.Y };
 

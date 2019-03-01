@@ -16,12 +16,27 @@ namespace TheTurtleChallange
     {
         public int X { get; set; }
         public int Y { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            Tile other = obj as Tile;
+            if (other == null)
+                return false;
+
+            return other.X == X && other.Y == Y;
+        }
     }
 
     public class Position
     {
         public Tile Tile { get; set; }
         public Direction Direction { get; set; }
+
+        public Position()
+        {
+            Tile = new Tile();
+            Direction = Direction.North;
+        }
     }
 
     public class GameSettings
@@ -30,17 +45,13 @@ namespace TheTurtleChallange
         public Tile ExitPosition { get; set; }
         public List<Tile> MinesPosition { get; set; }
         public Tile GridSize { get; set; }
-
-        public void IsValid()
+        
+        public GameSettings()
         {
-            if (InitPosition == null)
-                throw new ArgumentNullException(nameof(InitPosition));
-            if (ExitPosition == null)
-                throw new ArgumentNullException(nameof(ExitPosition));
-            if (MinesPosition == null)
-                throw new ArgumentNullException(nameof(MinesPosition));
-            if (GridSize == null)
-                throw new ArgumentNullException(nameof(GridSize));
+            InitPosition = new Position();
+            ExitPosition = new Tile();
+            MinesPosition = new List<Tile>();
+            GridSize = new Tile();
         }
     }
 
