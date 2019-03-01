@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using TheTurtleChallange;
 
 namespace TheTurtleChallangeTests
@@ -11,6 +12,17 @@ namespace TheTurtleChallangeTests
         public GeneralTests()
         {
             gameLogic = new Logic();
+        }
+
+        public GameSettings GetSimpleGameSetting(Tile gridSize = null, Position initialPositon = null, Tile exitPosition = null)
+        {
+            return new GameSettings
+            {
+                ExitPosition = exitPosition ?? new Tile { X = 2, Y = 2 },
+                GridSize = gridSize ?? new Tile { X = 3, Y = 3 },
+                InitPosition = initialPositon ?? new Position { Tile = new Tile { Y = 2, X = 0 }, Direction = Direction.East },
+                MinesPosition = new List<Tile> { new Tile { X = 1, Y = 1 } }
+            };
         }
 
         [TestMethod]
@@ -76,6 +88,23 @@ namespace TheTurtleChallangeTests
             p = gameLogic.GetNextPosition(p, "r");
             p = gameLogic.GetNextPosition(p, "m");
             Assert.IsTrue(p.Tile.Equals(new Tile()));
+        }
+
+        [TestMethod]
+        public void GameResult()
+        {
+            Position p = new Position { Tile = new Tile { X = 2, Y = 2 } };
+            gameLogic = new Logic(GetSimpleGameSetting(), new List<string>());
+
+            Assert.IsTrue(gameLogic.Exit(p));
+
+            p.Tile.X = 3;
+            p.Tile.Y = 3;
+            Assert.IsTrue(gameLogic.IsOutBound(p));
+
+            p.Tile.X = 1;
+            p.Tile.Y = 1;
+            Assert.IsTrue(gameLogic.MineHit(p));
         }
     }
 }
