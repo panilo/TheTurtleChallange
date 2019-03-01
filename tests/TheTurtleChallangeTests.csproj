@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TheTurtleChallange\src\TheTurtleChallange.csproj" />
+    <ProjectReference Include="..\src\TheTurtleChallange.csproj" />
   </ItemGroup>
 
 </Project>
