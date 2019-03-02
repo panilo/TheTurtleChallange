@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using TheTurtleChallange;
 
@@ -105,6 +106,74 @@ namespace TheTurtleChallangeTests
             p.Tile.X = 1;
             p.Tile.Y = 1;
             Assert.IsTrue(gameLogic.MineHit(p));
+        }
+
+        [TestMethod]
+        public void PlayTurtleExit()
+        {
+            List<string> moves = new List<string> { "m", "m" };
+            gameLogic = new Logic(GetSimpleGameSetting(), moves);
+
+            try
+            {
+                gameLogic.Play();
+            }
+            catch (IsExitException)
+            {
+                Assert.IsTrue(true);
+            }
+            catch(Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+        [TestMethod]
+        public void PlayTurtleIsOutOfBounds()
+        {
+            List<string> moves = new List<string> { "m" };
+
+            GameSettings gs = GetSimpleGameSetting();
+            gs.InitPosition.Direction = Direction.South;
+            gameLogic = new Logic(gs, moves);
+
+            try
+            {
+                gameLogic.Play();
+            }
+            catch (IsOutOfBoundsException)
+            {
+                Assert.IsTrue(true);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+        [TestMethod]
+        public void PlayTurtleHitMine()
+        {
+            List<string> moves = new List<string> { "m" };
+
+            GameSettings gs = GetSimpleGameSetting();
+            gs.InitPosition.Direction = Direction.North;
+            gs.InitPosition.Tile.X = 1;
+
+            gameLogic = new Logic(gs, moves);
+
+            try
+            {
+                gameLogic.Play();
+            }
+            catch (MineHitException)
+            {
+                Assert.IsTrue(true);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
     }
 }

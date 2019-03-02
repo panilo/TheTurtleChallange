@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace TheTurtleChallange
-{
+{    
     public enum Direction
     {
         North = 1, 
         East = 2, 
         South = ~North, 
         West = ~East
-    }
+    }    
 
     public class Tile
     {

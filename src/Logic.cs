@@ -28,14 +28,15 @@ namespace TheTurtleChallange
                 myTurtlePosition = GetNextPosition(myTurtlePosition, move);
                 //Check what happen
                 if (IsOutBound(myTurtlePosition))
-                    throw new IndexOutOfRangeException("Your turtle is out of bounds");
+                    throw new IsOutOfBoundsException();
                 if (MineHit(myTurtlePosition))
-                    throw new FieldAccessException("Your turtle hit a mine");
+                    throw new MineHitException();
                 if (Exit(myTurtlePosition))
-                    throw new UnauthorizedAccessException("your turtle is out");
+                    throw new IsExitException();
             }
 
             //Is still in danger....
+            throw new StillInDangerException();
         }
 
         public bool IsOutBound(Position position)
