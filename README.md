@@ -2,7 +2,7 @@
 
 ## How to run 
 
-To run the code first publish it before for your OS (e.g. for win use the command "dotnet publish -c Debug -r win10-x64")
+To run the code first publish it before for your OS (e.g. for win use the command "dotnet publish -c Debug -r win10-x64").  
 Then you can run it as normal console app "TheTurtleChallange.exe -gameSettings '{Your game setting file}' -moves {Your moves file}"
 
 ## Input files
