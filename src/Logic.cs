@@ -78,8 +78,10 @@ namespace TheTurtleChallange
 
         public Direction GetNextDirection(Direction lastDirection)
         {
-            //Using bitwise operation https://en.wikipedia.org/wiki/Bitwise_operations_in_C
-            return ~lastDirection;
+            if ((int)lastDirection > 3)
+                return Direction.North;
+            else
+                return lastDirection + 1;            
         }
 
         public Tile GetNextTile(Tile lastTile, Direction lastDirection)

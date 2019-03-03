@@ -10,8 +10,8 @@ namespace TheTurtleChallange
     {
         North = 1, 
         East = 2, 
-        South = ~North, 
-        West = ~East
+        South = 3, 
+        West = 4
     }    
 
     public class Tile
