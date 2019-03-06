@@ -4,12 +4,17 @@ import { Direction } from "../constants";
 
 class Tile extends React.Component{    
     render(){
+        let posStyle = {
+            top: 20 * (this.props.Y - 1),
+            left: 20 * (this.props.X - 1)
+        }
+
         let isMine = this.props.isMine;
         let currentPosition = this.props.isCurrentPosition;
         let tileClassName = "tile" + ((isMine) ? " isMine" : "") + ((currentPosition) ? " currentPosition" : ""); 
 
         return(
-            <div className={tileClassName}></div>
+            <div style={posStyle} className={tileClassName}></div>
         );
     }
 }
@@ -21,7 +26,7 @@ const mapStateToProps = state => {
     };
 }
 
-export class ConnectedGrid extends React.Component{
+class ConnectedGrid extends React.Component{
     constructor(){
         super();
         this.state = {
@@ -42,15 +47,24 @@ export class ConnectedGrid extends React.Component{
                 let isCurrentPosition = ( ((i+1) == currentPosition.X) && ((k+1) == currentPosition.Y) );
                 let isMine = mines.find(function(m){ return ( ((i+1) == m.X) && ((k+1) == m.Y) ); } );
 
-                tiles.push(<Tile isMine={(isMine != undefined)} isCurrentPosition={isCurrentPosition} />);
+                tiles.push(<Tile X={i+1} Y={k+1} isMine={(isMine != undefined)} isCurrentPosition={isCurrentPosition} />);
             }
         }
         
+        let tilesSizeStyle = {
+            width: 20 * (size.X + 1),
+            height: 20 * (size.Y + 1)
+        };
+
         return(
-            <div className="grid">
-                <div>{this.props.currentPosition.X} - {this.props.currentPosition.Y}</div>
-                <div>{Object.keys(Direction).find(k => Direction[k] === this.props.direction)}</div>
-                {tiles}
+            <div className="grid">                
+                <div className="position-info">
+                    <div>{this.props.currentPosition.X} - {this.props.currentPosition.Y}</div>
+                    <div>{Object.keys(Direction).find(k => Direction[k] === this.props.direction)}</div>
+                </div>
+                <div className="tiles" style={tilesSizeStyle}>
+                    {tiles}
+                </div>
             </div>            
         );
     }

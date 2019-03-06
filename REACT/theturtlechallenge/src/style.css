@@ -1,8 +1,13 @@
+.grid, .position-info, .tiles, .controls{
+    position: relative;
+}
+
 .tile{
     width: 20px;
     height: 20px;
     background-color: #eee;
     border: 1px #333 solid;
+    position: absolute;
 }
 
 .isMine{

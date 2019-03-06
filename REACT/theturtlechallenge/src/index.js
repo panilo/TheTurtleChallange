@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 import store from "./store/index";
 
-import {Grid} from './components/Grid';
+import {App} from './components/App';
 import "./style.css";
 
 ReactDOM.render(
     <Provider store={store}>
-        <Grid />
+        <App />
     </Provider>,
     document.getElementById('root')
 );
