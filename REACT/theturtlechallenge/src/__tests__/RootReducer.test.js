@@ -1,11 +1,14 @@
 import rootReducer from '../reducers/index';
-import {moveTurtle, rotateTurtle} from '../actions/index';
-import {Direction} from '../constants/index';
+import {rotateTurtle} from '../actions/index';
+import {Direction, TurtleStatus} from '../constants/index';
 
 test('no state passed', () =>{    
   expect(rootReducer(undefined, {})).toEqual({
-    currentPosition: {X:1,Y:1},
-    direction:Direction.North
+    currentPosition: {X:0,Y:0},
+    direction:Direction.North,
+    turtleStatus:TurtleStatus.StillInDanger,
+    mines:[{X:3,Y:2},{X:1,Y:4},{X:5,Y:2}],
+    gridSize:{X:5,Y:4}
   });  
 });
 
