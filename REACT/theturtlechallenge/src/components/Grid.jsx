@@ -1,4 +1,5 @@
 import React from "react";
+import uuidv1 from "uuid";
 import { connect } from "react-redux";
 import { Direction } from "../constants";
 
@@ -44,10 +45,10 @@ class ConnectedGrid extends React.Component{
 
         for(var i=0; i<size.X; i++){
             for(var k=0; k<size.Y; k++){            
-                let isCurrentPosition = ( ((i+1) == currentPosition.X) && ((k+1) == currentPosition.Y) );
-                let isMine = mines.find(function(m){ return ( ((i+1) == m.X) && ((k+1) == m.Y) ); } );
+                let isCurrentPosition = ( ((i+1) === currentPosition.X) && ((k+1) === currentPosition.Y) );
+                let isMine = mines.find(function(m){ return ( ((i+1) === m.X) && ((k+1) === m.Y) ); } );
 
-                tiles.push(<Tile X={i+1} Y={k+1} isMine={(isMine != undefined)} isCurrentPosition={isCurrentPosition} />);
+                tiles.push(<Tile key={uuidv1()} X={i+1} Y={k+1} isMine={(isMine !== undefined)} isCurrentPosition={isCurrentPosition} />);
             }
         }
         

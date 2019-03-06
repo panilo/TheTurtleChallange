@@ -36,22 +36,22 @@ function getNextDirection(currentDirection){
 function getNextPosition(currentPosition, currentDirection){    
     let nextPosition = currentPosition;
         
-    if (currentDirection == Direction.North)
+    if (currentDirection === Direction.North)
     {                
         nextPosition.Y = currentPosition.Y - 1;
     }
 
-    if (currentDirection == Direction.South)
+    if (currentDirection === Direction.South)
     {                
         nextPosition.Y = currentPosition.Y + 1;
     }
 
-    if (currentDirection == Direction.East)
+    if (currentDirection === Direction.East)
     {
         nextPosition.X = currentPosition.X + 1;             
     }
 
-    if (currentDirection == Direction.West)
+    if (currentDirection === Direction.West)
     {
         nextPosition.X = currentPosition.X - 1;
     }

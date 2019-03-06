@@ -1,8 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import rootReducer from '../reducers/index';
 import {moveTurtle, rotateTurtle} from '../actions/index';
-import {ROTATE, Direction} from '../constants/index';
+import {Direction} from '../constants/index';
 
 test('no state passed', () =>{    
   expect(rootReducer(undefined, {})).toEqual({
